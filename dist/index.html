@@ -1,12 +1,125 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>My Website</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>CreateWeddingSite-Chitra Weds Aravinth</title>
+    <link href="theme/vivid/floral/red/html/css/style.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="theme/vivid/floral/red/html/js/coin-slider/coin-slider-styles.css" type="text/css" />
+    <script type="text/javascript" src="theme/vivid/floral/red/html/js/jquery-1.4.3.min.js"></script>
+    <script type="text/javascript" src="theme/vivid/floral/red/html/js/coin-slider/coin-slider.js"></script>
+    <script type="text/javascript">
+        var user_site_id = 1;
+        var diff_time;
+        var display_method;
+        var ref;
+        var visitor_count;
+        var display_countdown_beforetext;
+        var display_countdown_aftertext;
+        var visitor_count;
+        var now;
+        var days_remain;
+        var datecompare;
+        $(document).ready(function () {
+            // updateDiffTime(user_site_id);
+            setInterval(function () {
+                calcshowcountdown();
+            }, 1000);
+            setInterval(function () {
+                // updateDiffTime(user_site_id);
+            }, 30000);
+            window_height = $(window).height() - 23;
+            $(".main").css("min-height", window_height);
+        });
+        $(window).resize(function () {
+            window_height = $(window).height() - 23;
+            $(".main").css("min-height", window_height);
+        });
+
+        function ExpiryPopUp() {
+            var ajax_box = $("div#welcome_pop_up_div");
+            ajax_box.css("top", ($(window).height() - ajax_box.height()) / 2 + 'px');
+            ajax_box.css("left", ($(window).width() - ajax_box.width()) / 2 + 'px');
+            ajax_box.fadeIn(200);
+            var cvr = jQuery("div#welcome_pop_up_div");
+            cvr.css("display", "block");
+            var maskHeight = $(document).height();
+            var maskWidth = $(window).width();
+            $("#cover").css({
+                "width": maskWidth,
+                "height": maskHeight
+            }).fadeIn(1000);
+            $("#cover").css('position', 'fixed');
+        }
+
+        function countdowndata(xml) {
+
+        }
+
+        function calcshowcountdown() {
+            var today = new Date();
+            var Christmas = new Date("12-09-2018");
+            var diffMs = (Christmas - today); // milliseconds between now & Christmas
+            var diffDays = Math.floor(diffMs / 86400000); // days
+            var diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
+            var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
+            var message = diffDays + " days, " + diffHrs + " hours, " + diffMins + " minutes";
+
+            var daymessage = diffDays + " days, " + diffHrs + " hours to go";
+            $('#count').empty();
+            $('#count').html(daymessage);
+
+            $('#count_down_div').empty();
+            $('<p>'+message+'</p>').appendTo('#count_down_div');
+        }
+        $(document).ready(function () {
+            $('#coin-slider').coinslider({
+                width: 594,
+                height: 314,
+                navigation: false,
+                delay: 500
+            });
+        });
+    </script>
 </head>
+
 <body>
-    <h1>Welcome, Bhavin</h1>
+    <div class="main">
+        <div class="fb_cover_div">
+        </div>
+        <div class="top">
+            <div class="logo">
+                <a href="user_site/preview_index_theme_color_id_1.html">
+                    Bhavin<br /><br />
+                    Janaki<br />
+                </a>
+            </div>
+            <div class="date">
+                09-December-2018
+                <br>
+                <span id="count" style="font-size:15px;"></span>
+            </div>
+        </div>
+        <div class="banner_intro">
+            <div id='coin-slider'>
+                <img src="user_data/1/welcome_image/W4GnKp.jpg" />
+                <img src="user_data/1/welcome_image/8KhwLW.jpg" />
+                <img src="user_data/1/welcome_image/mVhpgv.jpg" />
+                <img src="user_data/1/welcome_image/jJKpn4.jpg" />
+            </div>
+        </div>
+        <br class="clearfloat" />
+        <div class="continue">
+            <div class="count_down" id="count_down_div"></div>
+        </div>
+        <div class="btm_bar">
+
+        </div>
+        <style>
+            body {
+                margin: 0px auto 100px auto;
+            }
+        </style>
 </body>
+
 </html>

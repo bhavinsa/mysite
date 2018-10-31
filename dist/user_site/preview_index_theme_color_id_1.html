@@ -1,0 +1,236 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>CreateWeddingSite-Chitra Weds Aravinth</title>
+<link href="../theme/vivid/floral/red/html/css/style.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="../theme/vivid/floral/red/html/js/coin-slider/coin-slider-styles.css" type="text/css" />
+<script type="text/javascript" src="../theme/vivid/floral/red/html/js/jquery-1.4.3.min.js"></script>
+<script type="text/javascript" src="../theme/vivid/floral/red/html/js/coin-slider/coin-slider.js"></script>
+<script type="text/javascript">
+var user_site_id=1;
+var diff_time;
+var display_method;
+var ref;
+var visitor_count;
+var display_countdown_beforetext;
+var display_countdown_aftertext;
+var visitor_count;
+var now;
+var days_remain;
+var datecompare;
+$(document).ready(function() {
+            updateDiffTime(user_site_id);
+            setInterval(function () 
+            {
+                calcshowcountdown();
+            },1000);
+            setInterval(function () 
+            {
+                updateDiffTime(user_site_id);
+            },30000);
+          window_height=$(window).height()-23; 
+        $(".main").css("min-height",window_height);    
+});
+$(window).resize(function() 
+{
+    window_height=$(window).height()-23; 
+    $(".main").css("min-height",window_height);
+});
+function ExpiryPopUp()
+{ 
+    var ajax_box = $("div#welcome_pop_up_div");
+    ajax_box.css("top",($(window).height() - ajax_box.height())/2+'px');
+    ajax_box.css("left",($(window).width() - ajax_box.width())/2+'px');
+    ajax_box.fadeIn(200);	
+    var cvr = jQuery("div#welcome_pop_up_div");
+    cvr.css("display","block");
+    var maskHeight = $(document).height();
+    var maskWidth = $(window).width();
+    $("#cover").css({ "width": maskWidth, "height": maskHeight }).fadeIn(1000);   
+    $("#cover").css('position','fixed');
+}
+function updateDiffTime(user_site_id)
+{
+    jQuery.ajax({
+        type: "GET",
+        url: "http://www.createweddingsite.com/ajax/theme_welcome_show_count_down_aj.php",
+        data: ({
+            user_site_id : user_site_id	
+        }),
+        success: function(xml) 
+        { 
+            countdowndata(jQuery(xml));            
+        }
+    });
+}
+function countdowndata(xml)
+{
+    if($(xml).find("error").text()==1)
+    {
+        alert($(xml).find("message").text());
+    }
+    else
+    {		 	
+        diff_time = ($(xml).find("diff").text());
+        display_method = ($(xml).find("display_countdown_method").text()); 
+        display_countdown_beforetext = ($(xml).find("display_countdown_beforetext").text()); 
+        display_countdown_aftertext = ($(xml).find("display_countdown_aftertext").text()); 
+        days_remain = ($(xml).find("days_remain").text()); 
+        datecompare = ($(xml).find("datecompare").text()); 
+        visitor_count = ($(xml).find("visitor_count").text()); 
+    }
+}
+function calcshowcountdown()
+{
+    diff_time = diff_time-1;
+    var years   = Math.floor(diff_time / (365*60*60*24)); 
+    var remaining_month  = Math.floor((diff_time - years * 365*60*60*24) / (30*60*60*24)); 
+    var remaining_day    = Math.floor((diff_time) / (60*60*24));
+    var remaining_hour   = Math.floor((diff_time - remaining_day * 60*60*24) / (60*60)); 
+    var remaining_minutes  = Math.floor((diff_time - remaining_day * 60*60*24 - remaining_hour * 60*60) / 60); 
+    var remaining_seconds = Math.floor((diff_time - remaining_day * 60*60*24 - remaining_hour * 60*60 - remaining_minutes * 60)); 
+   if(datecompare == 0) /*current date less than countdown time*/
+   {
+   	if(display_method==1)
+        {    
+            var show_count_down = '<div class="display_count_all" style="text-align:center; margin:0px;">'+remaining_day+' day(s) '+display_countdown_beforetext+'</div>';
+            $("#count_down_div").html(show_count_down);
+            $("#count_down_div").show();
+        }
+        else if(display_method==2)
+        {
+            var show_count_down = '<div class="display_count_all" style="text-align:center; margin:0px;">'+remaining_day+' day(s) '+remaining_hour+' hour '+display_countdown_beforetext+'</div>';
+            $("#count_down_div").html(show_count_down);
+            $("#count_down_div").show();
+        }
+        else if(display_method==3)
+        {
+            var show_count_down = '<div class="display_count_all" style="text-align:center; margin:0px;">'+remaining_day+' day(s) '+remaining_hour+' hour : '+remaining_minutes+' minutes '+display_countdown_beforetext+'</div>';
+            $("#count_down_div").html(show_count_down);
+            $("#count_down_div").show();
+        }
+        else if(display_method==4)
+        {
+            var show_count_down = '<div class="display_count_all" style="text-align:center; margin:0px;">'+remaining_day+' day(s) '+remaining_hour+' hour : '+remaining_minutes+' minutes  '+remaining_seconds+' '+display_countdown_beforetext+'</div>';
+            $("#count_down_div").html(show_count_down);
+            $("#count_down_div").show();
+        }
+   }
+   else
+   {
+            var show_count_down = '<div class="display_count_all" style="text-align:center; margin:0px;">'+days_remain+' day(s) '+display_countdown_aftertext+'</div>';
+            $("#count_down_div").html(show_count_down);
+            $("#count_down_div").show();
+   }
+   if(visitor_count!=0)
+   {
+            var show_count_down = '<p style="text-align:center;margin-top:10px">Visitor Count : '+visitor_count+'</p>';
+            $("#count_down_div").append(show_count_down);
+            $("#count_down_div").show();
+   }    
+}$(document).ready(function() {
+		$('#coin-slider').coinslider({ width: 594,height:  314, navigation: false, delay: 500 });
+});
+</script>
+</head>
+<body>
+<div class="main">
+<div class="fb_cover_div">
+<div class="facebook_desc">Do you like createweddingsite?</div>
+    <div class="facebook_desc_box">
+        <div id="fb-root"></div>
+            <script>
+                (function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+                fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));
+            </script>
+            <div class="fb-like" data-href="https://www.facebook.com/createweddingsite" data-send="false" data-layout="button_count" data-width="450" data-show-faces="true">
+            </div>
+    </div>
+</div>
+  <div class="top">
+            <div class="logo">
+              	<a href="../user_site/preview_index_theme_color_id_1.html">
+           	Aravinth<br /><br />
+          	Chitra<br />
+              </a>
+            </div>
+            <div class="date">
+              10-June-2015            </div>
+  </div>
+  <div class="banner_intro">
+  <div id='coin-slider'>
+                       <img src="../user_data/1/welcome_image/W4GnKp.jpg" />
+                                          <img src="../user_data/1/welcome_image/8KhwLW.jpg" />
+                                          <img src="../user_data/1/welcome_image/mVhpgv.jpg" />
+                                          <img src="../user_data/1/welcome_image/jJKpn4.jpg" />
+                                          </div>
+</div>
+<br class="clearfloat" />
+    <div class="continue">
+    <a href="../user_site/preview_index_theme_color_id_1_p_1_php?theme_color_id=1&p=1.html#1">Continue</a></div>
+<div class="count_down" id="count_down_div"></div>
+</div>
+<div class="btm_bar">
+		<div class="footer">
+    		    			Wedding Site by <a href="../index.html" target="_blank">createweddingsite.com</a>
+    		   		 </div>
+</div>
+	    <style>
+		body
+		{
+			margin:0px auto 100px auto;
+		}
+	</style>
+        <div class="preview_themes_div" align="center">
+				<div class="center_preview_div">
+				<div class="themes_colors_thumbnails">
+		<a href="../user_site/preview_index_theme_color_id_4_php?theme_color_id=4.html"><img src="../theme/vivid/floral/orange/thumb.jpg" width="75" height="63" /></a>
+   		 </div>
+		<div class="themes_colors_thumbnails">
+		<a href="user_site/preview_index_theme_color_id_1.html"><img src="../theme/vivid/floral/red/thumb.jpg" width="75" height="63" /></a>
+   		 </div>
+		<div class="themes_colors_thumbnails">
+		<a href="../user_site/preview_index_theme_color_id_2_php?theme_color_id=2.html"><img src="../theme/vivid/floral/yellow/thumb.jpg" width="75" height="63" /></a>
+   		 </div>
+		<div class="themes_colors_thumbnails">
+		<a href="../user_site/preview_index_theme_color_id_3_php?theme_color_id=3.html"><img src="../theme/vivid/floral/purple/thumb.jpg" width="75" height="63" /></a>
+   		 </div>
+		<div class="themes_colors_thumbnails">
+		<a href="../user_site/preview_index_theme_color_id_5_php?theme_color_id=5.html"><img src="../theme/vivid/floral/green/thumb.jpg" width="75" height="63" /></a>
+   		 </div>
+		<div class="themes_colors_thumbnails">
+		<a href="../user_site/preview_index_theme_color_id_6_php?theme_color_id=6.html"><img src="../theme/vivid/floral/blue/thumb.jpg" width="75" height="63" /></a>
+   		 </div>
+		<div class="themes_colors_thumbnails">
+		<a href="../user_site/preview_index_theme_color_id_7_php?theme_color_id=7.html"><img src="../theme/vivid/floral/maroon/thumb.jpg" width="75" height="63" /></a>
+   		 </div>
+</div>
+</div>
+<div id="toast">&nbsp;</div> 
+    <div id="cover" style="opacity:0.8;"></div>
+    <div class="welcome_pop_up" id="welcome_pop_up_div">
+    	<div class="wel_pop_up_all">        
+        	        	<a href="#" id="sms_btn_close_link_welcome" style="float:right;margin-right:20px;"><img src="../images/pop_up/pop_up_close.png"/></a>
+                      <div class="wel_pop_up_cnt">
+          <div class="wel_pop_up_cnt_row" style="color:#000; margin:0 auto" align="center">
+                  Your Data has been posted Successfully.!
+                    </div>
+          	<div class="wel_pop_up_cnt_row" align="center" style="margin-left:-15px;margin-top:15px;margin-bottom:15px;">
+                       <a href="https://www.facebook.com/Createweddingsite" target="_blank"><img src="../images/pop_up_for_guestbook_rsvp.jpg" /></a>         
+                 </div>
+          <div class="wel_pop_up_cnt_row" style="color:#000; font-family:Verdana, Geneva, sans-serif;width:365px; padding-left:5px;margin:0 auto" align="center">
+          <iframe src="../index.html" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:340px; height:258px;" allowTransparency="true"></iframe>
+          </div>
+          <div class="wel_pop_up_cnt_row" align="center" style="margin-left:-15px;margin-top:15px;margin-bottom:15px;color:#ca2164; font-family:Verdana, Geneva, sans-serif; font-size:13px;">
+          Do you Like CreateWeddingSite ? <a href="https://www.facebook.com/Createweddingsite/reviews" target="_blank" style="color:#ca2164; text-decoration:underline">click here</a> to Rate Us
+          </div>
+           </div>
+        </div>
+    </div></body>
+</html>

@@ -1,0 +1,1086 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>CreateWeddingSite-Chitra Weds Aravinth</title>
+<link rel="stylesheet" type="text/css" href="../theme/vivid/floral/red/html/js/jPaginate/css/style.css" media="screen"/>
+<link href="../user_site/common_css_for_editor.css" rel="stylesheet" type="text/css" /> 
+<link href="../theme/vivid/floral/red/html/css/style.css" rel="stylesheet" type="text/css" />
+<script src="../js/jquery.js"></script>
+<script src="../theme/vivid/floral/red/html/js/jPaginate/jquery.paginate.js" type="text/javascript"></script>   
+<script src="../js/jquery.form.js"></script>
+<script src="../flashvars/Scripts/swfobject_modified.js" type="text/javascript"></script>
+<script src="../js/jquery-history-master/scripts/jquery.history.min.js" type="text/javascript"></script>
+<script src="../user_site/preloader.js" type="text/javascript"></script>
+<script type="text/javascript">
+	var user_page_id = 0;
+var gallery_photo_id = 0;
+var guest_total = 0;
+var guest_page_no=1;
+$(function() {
+        	$("a[id^='user_page_id_']").unbind('click');
+	$('a[id^="user_page_id_"]').click(function() {
+        $('a[id^="user_page_id_"]').css("text-decoration","none");
+        $(this).css("text-decoration","underline")
+		var link_id = $(this).attr('id');
+		user_page_id = link_id.replace('user_page_id_','');
+	});
+	var url = location.href;
+	if(url.indexOf("#") != -1 && url.indexOf("#") != url.length-1) {
+		var urlparts = url.split('#');
+		user_page_id = urlparts[1];
+        changePagecontent(user_page_id);
+	}
+    else if(user_page_id==0)
+    {
+    	        	 user_page_id = "1";
+            	changePagecontent(user_page_id);
+    }
+    		$.History.bind('1',function(){
+			user_page_id = 1;
+		changePagecontent(1);
+	});
+    		$.History.bind('2',function(){
+			user_page_id = 2;
+		changePagecontent(2);
+	});
+    		$.History.bind('3',function(){
+			user_page_id = 3;
+		changePagecontent(3);
+	});
+    		$.History.bind('4',function(){
+			user_page_id = 4;
+		changePagecontent(4);
+	});
+    		$.History.bind('5',function(){
+			user_page_id = 5;
+		changePagecontent(5);
+	});
+    		$.History.bind('6',function(){
+			user_page_id = 6;
+		changePagecontent(6);
+	});
+    		$.History.bind('7',function(){
+			user_page_id = 7;
+		changePagecontent(7);
+	});
+    		$.History.bind('8',function(){
+			user_page_id = 8;
+		changePagecontent(8);
+	});
+    		$.History.bind('17338',function(){
+			user_page_id = 17338;
+		changePagecontent(17338);
+	});
+});
+function ExpiryPopUp()
+{ 
+    var ajax_box = $("div#welcome_pop_up_div");
+    ajax_box.css("top",($(window).height() - ajax_box.height())/2+'px');
+    ajax_box.css("left",($(window).width() - ajax_box.width())/2+'px');
+    ajax_box.fadeIn(200);	
+    var cvr = jQuery("div#welcome_pop_up_div");
+    cvr.css("display","block");
+    var maskHeight = $(document).height();
+    var maskWidth = $(window).width();
+    $("#cover").css({ "width": maskWidth, "height": maskHeight }).fadeIn(1000);  
+    $("#cover").css('position','fixed');
+}
+function scrollTo()
+{
+	$('html,body').animate({scrollTop: $("#theme_content_div").offset().top},'slow');
+}
+function changePagecontent(user_page_id)
+{
+	preloaderShow();
+	jQuery.ajax({
+		type: "GET",
+		url: "http://www.createweddingsite.com/ajax/theme.ajax.php",
+		data: ({
+			user_page_id : user_page_id,
+			user_site_id : 1,
+                    active_theme_color_id : 1		}),
+		dataType: "xml",
+		success: function(xml) {
+			themeusersite(jQuery(xml));
+			preloaderHide();
+            scrollTo();
+		}
+	});
+}
+function themeusersite(xml)
+{
+	var header_data = $(xml).find("header_data").text();
+	$("#banner_img").html(header_data);
+	var data = $(xml).find("data").text();
+		$("#theme_content_div").html(data);	
+	setListeners();
+    var page_type_id = $(xml).find("page_type_id").text();
+    if(page_type_id == 7) {
+    	onChageGuestPageNation(guest_page_no);
+    }
+}
+var textcount=0;
+function setListeners()
+{      
+		$('#comments').keypress(function(e){		
+			comments = $('#comments').val();
+			countdown = $('#countdown').val();
+   			textcount = comments.length;
+			countdownvalue = 200-textcount;
+			$('#countdown').val(countdownvalue);
+		});
+		$("#save_guestbook").click(function(e) {
+			e.preventDefault();
+			var geustbook_id = $("#geustbook_id").val();
+			var common_approval_id = $("#common_approval_id").val();
+			var guest_name = $("#guest_name").val();
+			var guest_email = $("#guest_email").val();
+			var comments = $("#comments").val();           
+			if (guest_name=="")
+            {
+                alert("Enter your Name");
+            }
+			else if (guest_email=="")
+            {
+                alert("Enter your email address");
+            }
+			else if(!validateEmail(guest_email)) 
+			{
+                alert("Enter the valid email address");
+            }
+			else if (comments=="")
+			{
+				alert("Enter your Comments");	
+			}
+			else if(comments.length>350)
+			{
+				alert('only 350 character allowed');
+			}
+			else
+			{
+				InsertGuestbook(geustbook_id,common_approval_id,guest_name,guest_email,comments);
+			}
+		});
+	$("#guest_entry_title").click(function(e) {
+		e.preventDefault();								   
+		$(".guestbook_comments").slideToggle();
+	});
+	$("#rsvp_form").click(function(e) {
+		e.preventDefault();
+		var rspv_site_id = $("#rspv_site_id").val();
+		var rsvp_response_name = $("#rsvp_response_name").val();
+		var rsvp_response_contact = $("#rsvp_response_contact").val();
+		var rsvp_response_email = $("#rsvp_response_email").val();
+		var Prefered_mode_of_contact = $('input:radio[name=Prefered_mode_of_contact]:checked').val();
+		var rspv_site_question_id = $("#rspv_site_question_id").val();
+		var display_month = $("#display_month").val();
+		var display_date = $("#display_date").val();
+		var display_year = $("#display_year").val();		
+		var display_hour = $("#display_hour").val();
+		var display_minutes = $("#display_minutes").val();
+		var display_am_pm = $("#display_am_pm").val();
+		var date= '';
+		conn_str = "-";
+		date +=display_year+conn_str+display_month+conn_str+display_date;
+		var time ='';
+		conn_str_time = ":"
+		time += display_hour+conn_str_time+display_minutes+' '+display_am_pm;
+		var date_time = '';
+		conn_str_date_time = ' '
+		date_time += date+conn_str_date_time+time;
+		var rspv_ans_1 = '';
+		if($("input[name='attenning_wedding']:checked").length > 0) {
+			rspv_ans_1 = $('input:radio[name=attenning_wedding]:checked').val();
+		}
+		var rspv_ans_2 = '';
+		if($("input[name='which_u_attening']:checked").length > 0) {
+			rspv_ans_2 = $('input:radio[name=which_u_attening]:checked').val();
+		}
+		else
+		{
+			rspv_ans_2 = '';
+		}
+		var rspv_ans_3 = '';
+		if($("#rspv_site_question_id_3").length>0) {
+			rspv_ans_3 = $("#guests_accompanying").val();
+		}
+		var rspv_ans_4 = '';
+		if($("input[name='accomodation_arranged']:checked").length > 0) {
+			rspv_ans_4 = $('input:radio[name=accomodation_arranged]:checked').val();
+		}
+		else
+		{
+			rspv_ans_4 = '';
+		}
+		var rspv_ans_5 = '';
+		if($("#rspv_site_question_id_5").length>0) {
+			rspv_ans_5 =  date_time;
+		}var rspv_ans_6 = '';
+		if($("#rspv_site_question_id_6").length>0) {
+			rspv_ans_6 = $("#mode_of_travel").val();
+		}var rspv_ans_7 = '';
+		if($("#rspv_site_question_id_7").length>0) {
+			rspv_ans_7 = $("#comments_rspv").val();
+		}
+		if (rsvp_response_name=="")
+        	{
+                alert("Enter your Name");
+            }
+		else if (rsvp_response_contact=="")
+			{
+				alert("Enter your Contact no");
+			}
+		else if (rsvp_response_contact.length < 10 || isNaN(rsvp_response_contact))
+			{
+				alert("Enter valid Contact no ");
+			}
+		else if  (rsvp_response_email=="")
+            {
+                alert("Enter your email address");
+            }
+		else if(!validateEmail(rsvp_response_email)) {
+                alert("Enter the valid email address");
+            }
+		else if ($("input[name='Prefered_mode_of_contact']:checked").length == 0){
+                alert("Enter your Prefered mode of contact");
+            }
+		else if ($("input[name='attenning_wedding']:checked").length == 0){
+                alert("Enter wedding attenning details");
+            }
+		else if(rspv_ans_3 != '' && isNaN(rspv_ans_3))
+			{
+				alert("invalid number");
+			}
+		else
+			{	
+				Rspvresponsesubmit(rspv_site_id,rsvp_response_name,rsvp_response_contact,rsvp_response_email,Prefered_mode_of_contact,rspv_ans_1,rspv_ans_2,rspv_ans_3,rspv_ans_4,rspv_ans_5,rspv_ans_6,rspv_ans_7);
+			}
+	});
+	$("input:radio[name=attenning_wedding]").click(function(){
+ 		var radio_value = $('input:radio[name=attenning_wedding]:checked').val();
+		if(radio_value=='Yes') {
+    		$('.show_remaining_questions').show('slow');
+  		}
+  		else {	
+			$('.show_remaining_questions').hide('slow');
+   		}
+  	});
+	$("a[id^='gallery_entry_id_']").unbind('click');	
+	$('a[id^="gallery_entry_id_"]').click(function(e) {
+		e.preventDefault();		
+		var link_id = $(this).attr('id');
+		var gallery_entry_id = link_id.replace('gallery_entry_id_','');
+		showPhotoAlbum(gallery_entry_id);
+	});
+	$("div[id^='gallery_entry_id_']").unbind('click');	
+	$('div[id^="gallery_entry_id_"]').click(function(e) {
+		e.preventDefault();		
+		var link_id = $(this).attr('id');
+		var gallery_entry_id = link_id.replace('gallery_entry_id_','');
+		showPhotoAlbum(gallery_entry_id);
+	});
+	guest_total=0;
+}
+function guestPagenation(guest_total)
+{
+	preloaderShow();
+    jQuery("#guest_page_nation").paginate({
+		count 		: guest_total,
+		start 		: 1,
+		display     : 8,
+		border	: true,
+		border_color: '#fff',
+		text_color  : '#fff',
+		background_color : 'black',	
+		border_hover_color: '#ccc',
+		text_hover_color  : '#000',
+		background_hover_color	: '#fff', 
+		images	: false,
+		mouse	: 'press',
+		onChange : function(guest_total){
+			onChageGuestPageNation(guest_total);
+            preloaderHide();
+		}
+	});
+}
+function onChageGuestPageNation(guest_page_no)
+{
+   preloaderShow(); 
+		jQuery.ajax
+        ({
+			type: "GET",
+			url: "http://www.createweddingsite.com/ajax/theme_guest_paginate.php",
+			data: 
+            ({
+			guest_page_no : guest_page_no,
+			user_page_id : user_page_id
+			}),
+			success: function(data) 
+            {
+				$(".guest_book_entry_cover").html(data);
+				guestBookPageFunction();
+                preloaderHide();
+			}
+	});	
+}
+guest_total_pages=1;
+function guestBookPageFunction()
+{
+	if(guest_total != Math.ceil(guest_total_pages/15)) {
+		guest_total = Math.ceil(guest_total_pages/15);
+		guestPagenation(guest_total);
+	}
+    $('a[id^="edit_guestbook_entry_"]').click(function() {
+		//e.preventDefault();
+		var link_id = $(this).attr('id');
+		guestbook_entry_id = link_id.replace('edit_guestbook_entry_','');
+        $('#guestbook_entry_normal_'+guestbook_entry_id).hide();
+        $('#guestbook_entry_edit_'+guestbook_entry_id).show();
+        $('#update_guestbook_entry_display_'+guestbook_entry_id).show();
+        $('#edit_guestbook_entry_display_'+guestbook_entry_id).hide();
+        scrollTo();
+	}); 
+    $('a[id^="update_guestbook_entry_"]').click(function() {
+		//e.preventDefault();
+		var link_id = $(this).attr('id');
+		guestbook_entry_id = link_id.replace('update_guestbook_entry_','');
+        guestbook_entry_comment = $('#edit_textarea_guestbook_entry_'+guestbook_entry_id).val();
+        if(guestbook_entry_comment=='')
+        {
+        	alert('Please Enter Guest Book Entry Comments');
+        }
+        else
+        {
+       		updateGuestBookEntryId(guestbook_entry_id,guestbook_entry_comment);
+         }
+	}); 
+    $('a[id^="delete_edit_guestbook_entry_"]').click(function() {
+		//e.preventDefault();
+		var link_id = $(this).attr('id');
+		guestbook_entry_id = link_id.replace('delete_edit_guestbook_entry_','');
+      	deleteGalleryEntry(guestbook_entry_id);
+	}); 
+}
+function deleteGalleryEntry(guestbook_entry_id)
+{
+	jQuery.ajax({
+			type: "GET",
+			url: "http://www.createweddingsite.com/ajax/theme_guest_entry_delete.php",
+			data: ({
+			guestbook_entry_id : guestbook_entry_id
+			}),
+			dataType: "xml",
+			success: function(xml) {
+				guestBookPageEntryDeleteSuccess(jQuery(xml));
+			}	
+		});	
+}
+function guestBookPageEntryDeleteSuccess(xml)
+{
+	if($(xml).find("message").text()>0)
+	{
+		alert(message);
+	}
+	else
+	{
+		var guest_book_succ_msg = "Your Comment has been deleted successfully";
+                $("#toast").text(guest_book_succ_msg);
+        	$("#toast").fadeIn('fast');
+		setTimeout(function(){ $("#toast").fadeOut() }, 4000);	
+ 		scrollTo();	 
+        delete_guestbook_entry_id = $(xml).find("guestbook_entry_id").text();
+      	$('#gusetbook_entry_content_'+delete_guestbook_entry_id).hide();
+	}
+}
+function updateGuestBookEntryId(guestbook_entry_id,guestbook_entry_comment)
+{
+		jQuery.ajax({
+			type: "GET",
+			url: "http://www.createweddingsite.com/ajax/theme_guest_entry_update.php",
+			data: ({
+			guestbook_entry_id : guestbook_entry_id,
+			guestbook_entry_comment : guestbook_entry_comment
+			}),
+			dataType: "xml",
+			success: function(xml) {
+				guestBookPageEntryUpdateSuccess(jQuery(xml));
+			}	
+		});	
+}
+function guestBookPageEntryUpdateSuccess(xml)
+{
+	if($(xml).find("message").text()>0)
+	{
+		alert(message);
+	}
+	else
+	{
+		var guest_book_succ_msg = "Your Comment has been updated successfully";
+   		$("#toast").text(guest_book_succ_msg);
+        	$("#toast").fadeIn('fast');
+		setTimeout(function(){ $("#toast").fadeOut() }, 4000);		 
+                scrollTo();
+	}
+}
+function validateEmail(email) {
+	var return_val = true;
+	var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+	var validation_html;
+	if(email == '') {
+		return_val = false;
+	}
+	else if(!emailReg.test(email)) {
+		return_val=false;
+	}
+	if(return_val)
+	{
+		return true;
+	}
+	else
+	{ 
+		return false;
+	}
+}
+function InsertGuestbook(geustbook_id,common_approval_id,guest_name,guest_email,comments)
+{
+ 	preloaderShow();
+	jQuery.ajax({
+		type: "GET",
+		url: "http://www.createweddingsite.com/ajax/insert_guestbook_aj.php",
+		data: ({
+			geustbook_id : geustbook_id,
+			common_approval_id : common_approval_id,
+			guest_name : guest_name,
+			guest_email : guest_email,
+			comments :comments,
+            user_site_id : 1		}),
+		dataType: "xml",
+		   success: function(xml) { 
+                    preloaderHide();
+		   getguestbook(jQuery(xml));
+		  changePagecontent(user_page_id);
+		}
+	});
+}
+function getguestbook(xml)
+{
+	if($(xml).find("message").text()>0)
+	{
+		alert(message);
+	}
+	else
+	{	
+            var guest_book_succ_msg = "Comment has been posted successfully";
+   	    $("#toast").text(guest_book_succ_msg);
+	    $("#guest_entry_success").show();
+                    	 setTimeout(function()
+         	 { 
+         		weddingFBlikePopUp();
+         	 },500);    
+   	}
+}
+function weddingFBlikePopUp()
+{ 
+    var ajax_box = $("div#welcome_pop_up_div");
+    ajax_box.css("top",($(window).height() - ajax_box.height())/2+'px');
+    ajax_box.css("left",($(window).width() - ajax_box.width())/2+'px');
+    ajax_box.fadeIn(200);	
+    var cvr = jQuery("div#welcome_pop_up_div");
+    cvr.css("display","block");
+    var maskHeight = $(document).height();
+    var maskWidth = $(window).width();
+    $("#cover").css({ "width": maskWidth, "height": maskHeight }).fadeIn(1000);
+    $(document).keypress(function(e) {
+    if(e.keyCode==27){
+    $("#welcome_pop_up_div").hide();
+    $(document).removeAttr("keypress");
+    $(document).removeAttr("keydown");
+            jQuery("div#cover").hide(); 
+    }
+    });
+    $(document).keydown(function(e) 
+    {
+        if(e.keyCode==27)
+        {
+            $("#welcome_pop_up_div").hide();
+            $(document).removeAttr("keypress");
+            $(document).removeAttr("keydown");
+            jQuery("div#cover").hide(); 
+        }
+    });	
+    $("#sms_btn_close_link_welcome").click(function(e) 
+    {
+        e.preventDefault();
+        var ajax_box = $("#welcome_pop_up_div");
+        ajax_box.hide();
+        $(document).removeAttr("keypress");
+        $(document).removeAttr("keydown");
+        document.body.style.overflowY = "scroll"
+        jQuery("div#cover").hide(); 
+    });
+}
+function getcontactus(xml)
+{
+	if($(xml).find("message").text()>0)
+	{
+		alert(message);
+	}
+	else
+	{
+		alert('updated successfully');		
+	}
+}
+function Rspvresponsesubmit(rspv_site_id,rsvp_response_name,rsvp_response_contact,rsvp_response_email,Prefered_mode_of_contact,rspv_ans_1,rspv_ans_2,rspv_ans_3,rspv_ans_4,rspv_ans_5,rspv_ans_6,rspv_ans_7)
+{
+	jQuery.ajax({
+		type: "GET",
+		url: "http://www.createweddingsite.com/ajax/rspv_submit_forntend_aj.php",
+		data: ({
+			rspv_site_id : rspv_site_id,
+			rsvp_response_name : rsvp_response_name,
+			rsvp_response_contact : rsvp_response_contact,
+			rsvp_response_email : rsvp_response_email,
+			Prefered_mode_of_contact :Prefered_mode_of_contact,
+			rspv_ans_1 : rspv_ans_1,
+			rspv_ans_2 : rspv_ans_2,
+			rspv_ans_3 : rspv_ans_3,
+			rspv_ans_4 : rspv_ans_4,
+			rspv_ans_5 : rspv_ans_5,
+			rspv_ans_6 : rspv_ans_6,
+			rspv_ans_7 : rspv_ans_7
+		}),
+		dataType: "xml",
+		   success: function(xml) {
+		   getmessagersvp(jQuery(xml));
+		  changePagecontent(user_page_id);
+		}
+	});
+}
+function getmessagersvp(xml)
+{
+	if(jQuery(xml).find("error").text()>0)
+	{
+		alert(jQuery(xml).find("message").text());
+	}
+	else
+	{	
+            var rsvp_succ_msg = "Your RSVP Details posted successfully";
+            $("#toast").text(rsvp_succ_msg);
+                           setTimeout(function()
+                    { 
+         		weddingFBlikePopUp();
+                    },500);    
+   	}
+}
+function showPhotoAlbum(gallery_entry_id)
+{
+	jQuery.ajax({
+		type: "GET",
+			url: "http://www.createweddingsite.com/ajax/theme_show_photo_alubm.php",
+		   	data: ({
+            user_page_id : user_page_id,
+		   	gallery_entry_id : gallery_entry_id
+		   	}),
+		success: function(data) {
+			$("#show_photos_album").html(data);
+			showPhotoAlbumdiv();
+		}
+	});
+}
+function showPhotoAlbumdiv()
+{	
+	$("#show_photos_album").show();
+	$(".banner").hide();
+	$("#theme_content_div").hide();
+	$("div[id^='photos_album_div_']").unbind('click');
+	$("div[id^='photos_album_div_']").click(function(e){
+	e.preventDefault();
+		var link_id = $(this).attr('id');
+		gallery_photo_id = link_id.replace('photos_album_div_','');
+		galleryPhotoDisplay(gallery_photo_id);
+    });
+	$("a[id^='user_page_id_']").unbind('click');
+	$('a[id^="user_page_id_"]').click(function() {
+		//e.preventDefault();
+		$("#show_photos_album").hide();
+		$(".banner").show();
+		$("#theme_content_div").show();
+		var link_id = $(this).attr('id');
+		user_page_id = link_id.replace('user_page_id_','');
+		changePagecontent(user_page_id);
+	}); 
+	var url = location.href;
+	if(url.indexOf("#") != -1 && url.indexOf("#") != url.length-1) {
+		var urlparts = url.split('#');
+		user_page_id = urlparts[1];
+	}
+}
+function galleryPhotoDisplay(gallery_photo_id)
+{
+	preloaderShow();
+	jQuery.ajax({
+		type: "GET",
+		url: "http://www.createweddingsite.com/ajax/edit_site_album_photo_show.php",
+		data: ({
+        	user_page_id : user_page_id,
+			gallery_photo_id : gallery_photo_id
+		}),
+		dataType: "xml",
+		   success: function(xml) {
+		   getImagePath(jQuery(xml));
+		    preloaderHide();
+		}
+	});
+}
+var imagewidth=1;
+var imageheight=1;
+var image_path='/images/photos-album-temp-img.png';
+var display_click=0;
+function getImagePath(xml)
+{
+	if($(xml).find("error").text()>0)
+	{
+		alert($(xml).find("message").text());
+	}
+	else
+	{
+		 gallery_photo_id = $(xml).find("gallery_photo_id").text();
+		 description_type = $(xml).find("description_type").text();
+		 //description_type = $(xml).find("description_type").text();
+		 description_data = $(xml).find("description").text();
+		 total_album_count = $(xml).find("total_album_count").text();
+		 album_image_order_count = $(xml).find("album_image_order_count").text();
+		 if(description_type==1)
+		 {
+			 $(".description_add").show();
+			 $(".description_edit_pop_up").hide();
+			 $('.description_edit_after_click').hide();
+		 }
+		 if(description_type==2)
+		 {
+			 $(".description_add").hide();
+			 $('.description_add_after_click').hide();
+			  $(".description_edit_pop_up").show();
+			 $('.description_shown').show();
+			 $("#description").html(description_data);
+		 }
+			image_path = $(xml).find("image_path").text();
+		 	imagewidth = $(xml).find("width").text();
+		 	imageheight = $(xml).find("height").text();
+			$('.gallery_dash_bord_top_total').html(album_image_order_count+'/'+total_album_count);
+			display_click=1;
+		albumPopUpImageDisplay(imagewidth,imageheight,image_path,display_click);
+	}
+}
+function albumPopUpImageDisplay(imagewidth,imageheight,image_path,display_click)
+{
+	$("html").css("overflow-y", "hidden");
+	windowheight = $(window).height()-60;
+     	windowwidth = $(window).width()-50;
+        if(windowwidth<650)
+		{
+			windowwidth=650;
+		}
+		var display_width = imagewidth;
+		var display_height = imageheight;
+		var margin_left = Math.round((windowwidth-display_width)/2);
+		var margin_top = Math.round((windowheight-display_height)/2);
+		if(windowwidth < display_width){
+			diff_pixel = display_width-windowwidth;
+			diff_percent = (diff_pixel/display_width)*100;
+			display_width = display_width-diff_pixel;// Math.round(display_width-st3);
+			display_height = display_height - (display_height * diff_percent / 100);
+			margin_left = Math.round((windowwidth-display_width)/2);
+			margin_top = Math.round((windowheight-display_height)/2);
+		}
+		if(windowheight < display_height){
+			diff_pixel = display_height-windowheight;
+			diff_percent = (diff_pixel/display_height)*100;
+			//st3 = (display_width)/diff_percent;
+			display_height = display_height-diff_pixel;// Math.round(display_width-st3);
+			display_width = display_width - (display_width * diff_percent / 100);
+			margin_left = Math.round((windowwidth-display_width)/2);
+			margin_top = Math.round((windowheight-display_height)/2);
+		}
+		else{
+			margin_left = Math.round((windowwidth-imagewidth)/2);
+			margin_top = Math.round((windowheight-imageheight)/2);
+		}
+                if(margin_left<0)
+                    margin_left=0;
+                if(margin_top<0)
+                    margin_top=0;
+		$("#pop_up_image").css("margin-left", margin_left+'px');
+		$("#pop_up_image").css("margin-top", margin_top+'px');
+		$("#pop_up_image").css("width", display_width+'px');
+		$("#pop_up_image").css("height", display_height+'px');
+		$("#photo_album_display").css("width", windowwidth+'px');
+		$("#photo_album_display").css("height", windowheight+'px');
+		$('#pop_up_image').attr("src",'http://www.createweddingsite.com/'+image_path);
+		if(display_click==1)
+		{
+		$("#description").html(description_data);
+		$("html").css("overflow-y", "hidden");
+		imagePopUp();
+		}
+		margin_top_arrow = (Math.round((windowheight)/2)-60);
+		margin_left_arrow = (Math.round((windowwidth)/8));
+		margin_rig_arrow = (Math.round((windowwidth)/8));
+		margin_top_dashboard = (Math.round((windowheight))-40);
+		$('.right_image_move').css("top",margin_top_arrow+'px');
+		$('.left_image_move').css("top",margin_top_arrow+'px');
+		$('.left_image_move').css("left",margin_left_arrow+'px');
+		$('.right_image_move').css("right",margin_rig_arrow+'px');
+		$('.gallery_dash_bord_top').css("bottom",margin_top_dashboard+'px');
+        $('.gallery_dash_bord_top').css("width",windowwidth-56+'px');
+		$('.background_transparant').css("width",windowwidth+'px');
+        paddingleft = margin_left_arrow;
+		$('.gallery_dash_bord_top_name').css("padding-left",paddingleft+'px');
+        $('.gallery_dash_bord_top_name').css("width",200+'px');
+		$('.gallery_dash_bord_top_total').css("padding-right",margin_rig_arrow+'px');
+        $('.gallery_dash_bord_top_total').css({'float':'right'});
+}
+function imagePopUp()
+{
+	$('#left_move').unbind('click');
+	$("#left_move").click(function(e){
+			e.preventDefault();
+			option_click = 1;
+                        imagewidth=1;
+			imageheight=1;
+			image_path ='/images/photos-album-temp-img.png';
+                        albumPopUpImageDisplay(imagewidth,imageheight,image_path,display_click);		   
+			imageMoveLeftRight(gallery_photo_id,option_click);
+			$('.description_add_after_click').hide();
+			$('.description_edit_after_click').hide();
+			$('.description_shown').show();
+			preloaderShow();
+	});
+        $('#right_move').unbind('click');
+	$("#right_move").click(function(e){
+			e.preventDefault();
+			option_click = 2;
+                        imagewidth=1;
+			imageheight=1;
+			image_path ='/images/photos-album-temp-img.png';
+                        albumPopUpImageDisplay(imagewidth,imageheight,image_path,display_click);
+			imageMoveLeftRight(gallery_photo_id,option_click);
+			$('.description_add_after_click').hide();
+			$('.description_edit_after_click').hide();
+			$('.description_shown').show();
+			preloaderShow();
+	});
+        var ajax_box = $("div#photo_album_display");
+	ajax_box.css("top",($(window).height() - ajax_box.height())/2 + $(window).scrollTop()+'px');
+	ajax_box.css("left",($(window).width() - ajax_box.width())/2+'px');
+	//ajax_box.fadeIn(200);
+	ajax_box.show();
+		var cvr = jQuery("div#cover");
+		cvr.css("display","block");
+		var maskHeight = $(document).height();
+		var maskWidth = $(window).width();
+		$("#cover").css({ "width": maskWidth, "height": maskHeight }).fadeIn(1000);
+		$(document).keypress(function(e) 
+                {
+		    if(e.keyCode==27)
+                    {
+                        $("#photo_album_display").hide();
+                        $(document).removeAttr("keypress");
+                        $(document).removeAttr("keydown");
+                        jQuery("div#cover").hide(); 
+                        $("html").css("overflow-y", "auto");
+                        imagewidth=1;
+                        imageheight=1;
+                        image_path ='/images/photos-album-temp-img.png';
+                    }
+                    else if(e.keyCode==37)
+                    {
+                        option_click = 1;					   
+                        imageMoveLeftRight(gallery_photo_id,option_click);
+                        $('.description_add_after_click').hide();
+                        $('.description_edit_after_click').hide();
+                        $('.description_shown').show();
+                        preloaderShow();
+                    }
+                    else if(e.keyCode==39)
+                    {
+                        option_click = 2;					   
+                        imageMoveLeftRight(gallery_photo_id,option_click);
+                        $('.description_add_after_click').hide();
+                        $('.description_edit_after_click').hide();
+                        $('.description_shown').show();
+                        preloaderShow();
+                    }
+		});
+		$(document).keydown(function(e) 
+                {
+		    if(e.keyCode==27)
+                    {
+		        $("#photo_album_display").hide();
+		        $(document).removeAttr("keypress");
+		        $(document).removeAttr("keydown");
+                        jQuery("div#cover").hide(); 
+                        $("html").css("overflow-y", "auto");
+                        imagewidth=1;
+                        imageheight=1;
+                        image_path ='/images/photos-album-temp-img.png';
+                    }
+		});	
+		$("#sms_btn_close_link_gallery_photo").click(function(e)
+                {
+                    e.preventDefault();
+                    var ajax_box = $("#photo_album_display");
+                    ajax_box.hide();
+                    $(document).removeAttr("keypress");
+                    $(document).removeAttr("keydown");
+                    jQuery("div#cover").hide(); 
+                    $("html").css("overflow-y", "auto"); 
+                    imagewidth=1;
+                    imageheight=1;
+                    image_path ='/images/photos-album-temp-img.png';
+		});	
+		$('#add_description_click').unbind('click');
+		$('#add_description_click').click(function(e){
+				e.preventDefault();		
+			$('.description_add_after_click').show();
+			$("#add_des_img_pop").attr("value",'');
+		});
+		$('#description_edit_click').unbind('click');
+		$('#description_edit_click').click(function(e){
+			e.preventDefault();								
+			$('.description_edit_after_click').show();
+			$("#edit_des_img_pop").attr("value",description_data);
+			$('.description_shown').hide();
+		});
+		$('#image_des_add_save').unbind('click');
+		$('#image_des_add_save').click(function(e){
+			e.preventDefault();								
+			var photo_des =  $("#add_des_img_pop").val();
+			PhotoDescupdate(gallery_photo_id,photo_des);
+		});
+		$('#image_des_add_save_cancel').unbind('click');
+		$('#image_des_add_save_cancel').click(function(e){
+			e.preventDefault();
+			$('#add_des_img_pop').val('');
+		});
+		$('#image_des_edit_save').unbind('click');
+		$('#image_des_edit_save').click(function(e){
+			e.preventDefault();								
+			var photo_des =  $("#edit_des_img_pop").val();
+			PhotoDescupdate(gallery_photo_id,photo_des);
+		});
+		$('#image_des_edit_save_cancel').unbind('click');
+		$('#image_des_edit_save_cancel').click(function(e){
+			e.preventDefault();	
+			$("#edit_des_img_pop").attr("value",description_data);
+		});
+}
+function imageMoveLeftRight(gallery_photo_id,option_click)
+{
+	preloaderShow();
+	jQuery.ajax({
+		type: "GET",
+		url: "http://www.createweddingsite.com/ajax/edit_site_album_move_click_show.php",
+		data: ({
+			gallery_photo_id : gallery_photo_id,
+			option_click : option_click
+		}),
+		dataType: "xml",
+		   success: function(xml) {
+		   getImageClick(jQuery(xml));
+		    preloaderHide();
+		}
+	});
+}
+function getImageClick(xml)
+{
+	if($(xml).find("error").text()>0)
+	{
+		alert($(xml).find("message").text());
+	}
+	else
+	{
+		gallery_photo_id = $(xml).find("gallery_photo_id_curent").text();
+		description_type = $(xml).find("description_type").text();
+	  	description_data = $(xml).find("description").text();
+		 total_album_count = $(xml).find("total_album_count").text();
+		 album_image_order_count = $(xml).find("album_image_order_count").text();
+		 if(description_type==1)
+		 {
+			 $(".description_edit_pop_up").hide();
+			 $('.description_edit_after_click').hide();
+			 $('.description_shown').hide();
+			  $(".description_add").show();
+		 }
+		  if(description_type==2)
+		 {
+			  $(".description_add").hide();
+			  $(".description_add_after_click").hide();
+			    $(".description_edit_pop_up").show();
+			  $("#description").html(description_data);
+		 }
+		image_path = $(xml).find("image_path").text();
+		imagewidth = $(xml).find("width").text();
+		imageheight = $(xml).find("height").text();
+		$('.gallery_dash_bord_top_total').html(album_image_order_count+'/'+total_album_count);
+		display_click=2;
+		albumPopUpImageDisplay(imagewidth,imageheight,image_path,display_click);	
+	}
+}
+$(window).resize(function() {
+	if($("#photo_album_display").is(':visible')) {
+		albumPopUpImageDisplay(imagewidth,imageheight,image_path,display_click);
+		}
+});</script>
+</head>
+<body>
+<div class="main">
+ <div class="fb_cover_div">
+<div class="facebook_desc">Do you like createweddingsite?</div>
+    <div class="facebook_desc_box">
+        <div id="fb-root"></div>
+            <script>
+                (function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+                fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));
+            </script>
+            <div class="fb-like" data-href="https://www.facebook.com/createweddingsite" data-send="false" data-layout="button_count" data-width="450" data-show-faces="true">
+            </div>
+    </div>
+</div>	<div class="top">
+		<div class="logo" >
+				<a href=" preview_index.php?theme_color_id=1 ">
+           	Aravinth<br /><br/>
+          	Chitra<br />
+			</a>
+		</div>
+		<div class="date" >
+			10-June-2015		</div>
+	</div>
+	<div class="menu_colm">  
+		 			<ul>
+            	<li>
+                	<a href="#1" id="user_page_id_1">Home page</a>
+				</li>
+        	</ul>
+			<ul>
+            	<li>
+                	<a href="#2" id="user_page_id_2">The Wedding</a>
+				</li>
+        	</ul>
+			<ul>
+            	<li>
+                	<a href="#3" id="user_page_id_3">Bride & Groom</a>
+				</li>
+        	</ul>
+			<ul>
+            	<li>
+                	<a href="#4" id="user_page_id_4">Our Story</a>
+				</li>
+        	</ul>
+			<ul>
+            	<li>
+                	<a href="#5" id="user_page_id_5">Contact Us</a>
+				</li>
+        	</ul>
+			<ul>
+            	<li>
+                	<a href="#6" id="user_page_id_6">Guest Book</a>
+				</li>
+        	</ul>
+			<ul>
+            	<li>
+                	<a href="#7" id="user_page_id_7">Photo Albums</a>
+				</li>
+        	</ul>
+			<ul>
+            	<li>
+                	<a href="#8" id="user_page_id_8">RSVP</a>
+				</li>
+        	</ul>
+			<ul>
+            	<li>
+                	<a href="#17338" id="user_page_id_17338">Live Video</a>
+				</li>
+        	</ul>
+	</div>
+    <div style="float:left;display:inline;">
+        <div class="banner" id="banner_img">
+			<img id="image_specific" src="../images/pattern.png" />
+		</div>
+		<br class="clearfloat" />
+		<div class="banner_colm" id="theme_content_div"></div>
+    </div>
+    <div id="show_photos_album" style="display:none;">
+    </div>
+</div>
+<div class="btm_bar">
+<div style="width:500px; float:left;display:inline; padding-top:3px;"><script type="text/javascript">var addthis_pub="49eecb9c76fa2be1";</script><a expr:name='data:post.title' expr:id='data:post.url' onmouseover='return addthis_open(this, "", this.id, this.name);' onmouseout='addthis_close()' onclick='return addthis_sendto()'><img src="../s7.addthis.com/static/btn/lg-share-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0" /></a><script type="text/javascript" src="../s7.addthis.com/js/200/addthis_widget.js"></script></div>
+    	<div class="footer">
+        	Wedding Site by <a href="../index.html" target="_blank">createweddingsite.com</a>
+        </div>
+</div>
+ <div id="preloader" style="z-index:1000000;display:none;
+	position:fixed;
+	top:10%;
+	left:15%;
+	display:none;
+	z-index:10000;"><img src="../user_site/preloader/preloder_l.png" /></div>
+         <style>
+		body
+		{
+			margin:0px auto 100px auto;
+		}
+	</style>
+        <div class="preview_themes_div" align="center">
+				<div class="center_preview_div">
+				<div class="themes_colors_thumbnails">
+		<a href="../user_site/preview_index_theme_color_id_4_php?theme_color_id=4.html"><img src="../theme/vivid/floral/orange/thumb.jpg" width="75" height="63" /></a>
+   		 </div>
+		<div class="themes_colors_thumbnails">
+		<a href="user_site/preview_index_theme_color_id_1.html"><img src="../theme/vivid/floral/red/thumb.jpg" width="75" height="63" /></a>
+   		 </div>
+		<div class="themes_colors_thumbnails">
+		<a href="../user_site/preview_index_theme_color_id_2_php?theme_color_id=2.html"><img src="../theme/vivid/floral/yellow/thumb.jpg" width="75" height="63" /></a>
+   		 </div>
+		<div class="themes_colors_thumbnails">
+		<a href="../user_site/preview_index_theme_color_id_3_php?theme_color_id=3.html"><img src="../theme/vivid/floral/purple/thumb.jpg" width="75" height="63" /></a>
+   		 </div>
+		<div class="themes_colors_thumbnails">
+		<a href="../user_site/preview_index_theme_color_id_5_php?theme_color_id=5.html"><img src="../theme/vivid/floral/green/thumb.jpg" width="75" height="63" /></a>
+   		 </div>
+		<div class="themes_colors_thumbnails">
+		<a href="../user_site/preview_index_theme_color_id_6_php?theme_color_id=6.html"><img src="../theme/vivid/floral/blue/thumb.jpg" width="75" height="63" /></a>
+   		 </div>
+		<div class="themes_colors_thumbnails">
+		<a href="../user_site/preview_index_theme_color_id_7_php?theme_color_id=7.html"><img src="../theme/vivid/floral/maroon/thumb.jpg" width="75" height="63" /></a>
+   		 </div>
+</div>
+</div>
+	    <div id="toast">&nbsp;</div> 
+    <div id="cover" style="opacity:0.8;"></div>
+    <div class="welcome_pop_up" id="welcome_pop_up_div">
+    	<div class="wel_pop_up_all">        
+        	        	<a href="#" id="sms_btn_close_link_welcome" style="float:right;margin-right:20px;"><img src="../images/pop_up/pop_up_close.png"/></a>
+                      <div class="wel_pop_up_cnt">
+          <div class="wel_pop_up_cnt_row" style="color:#000; margin:0 auto" align="center">
+                  Your Data has been posted Successfully.!
+                    </div>
+          	<div class="wel_pop_up_cnt_row" align="center" style="margin-left:-15px;margin-top:15px;margin-bottom:15px;">
+                       <a href="https://www.facebook.com/Createweddingsite" target="_blank"><img src="../images/pop_up_for_guestbook_rsvp.jpg" /></a>         
+                 </div>
+          <div class="wel_pop_up_cnt_row" style="color:#000; font-family:Verdana, Geneva, sans-serif;width:365px; padding-left:5px;margin:0 auto" align="center">
+          <iframe src="../index.html" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:340px; height:258px;" allowTransparency="true"></iframe>
+          </div>
+          <div class="wel_pop_up_cnt_row" align="center" style="margin-left:-15px;margin-top:15px;margin-bottom:15px;color:#ca2164; font-family:Verdana, Geneva, sans-serif; font-size:13px;">
+          Do you Like CreateWeddingSite ? <a href="https://www.facebook.com/Createweddingsite/reviews" target="_blank" style="color:#ca2164; text-decoration:underline">click here</a> to Rate Us
+          </div>
+           </div>
+        </div>
+    </div></body>
+</html>

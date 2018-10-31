@@ -1,0 +1,261 @@
+@charset "utf-8";
+/* CSS Document */
+
+@font-face 
+{
+    font-family:"BaroqueAntiqueScript";
+	src: url(../css/font/wedding_font_collection/BaroqueAntiqueScript.ttf);
+}
+@font-face 
+{
+    font-family:"BrushScriptStd";
+	src: url(../css/font/wedding_font_collection/BrushScriptStd.otf);
+}
+@font-face 
+{
+    font-family:"Dutch-Harley";
+	src: url(../css/font/wedding_font_collection/Dutch-Harley.ttf);
+}
+@font-face 
+{
+    font-family:"Freestyle Scripts";
+	src: url(../css/font/wedding_font_collection/FREESCPT.TTF);
+}
+@font-face 
+{
+    font-family:"Gabriola";
+	src: url(../css/font/wedding_font_collection/Gabriola.ttf);
+}
+@font-face 
+{
+    font-family:"Harrington";
+	src: url(../css/font/wedding_font_collection/HARNGTON.TTF);
+}
+
+@font-face 
+{
+    font-family:"Kozuka Gothic Pro EL";
+	src: url(../css/font/wedding_font_collection/KozGoPro-ExtraLight.otf);
+}
+@font-face 
+{
+    font-family:"La Chata";
+	src: url(../css/font/wedding_font_collection/la-chata-normal.ttf);
+}
+
+@font-face 
+{
+    font-family:"Lucida Calligraphy";
+	src: url(../css/font/wedding_font_collection/LCALLIG.TTF);
+}
+@font-face 
+{
+    font-family:"Little Lord Fontleroy NF";
+	src: url(../css/font/wedding_font_collection/LittleLordFontleroyNF.ttf);
+}
+@font-face 
+{
+    font-family:"Merienda";
+	src: url(../css/font/wedding_font_collection/Merienda-Regular.ttf);
+}
+@font-face 
+{
+    font-family:"Minion Pro";
+	src: url(../css/font/wedding_font_collection/MinionPro-It.otf);
+}
+@font-face 
+{
+    font-family:"Mistral";
+	src: url(../css/font/wedding_font_collection/MISTRAL.TTF);
+}
+@font-face 
+{
+    font-family:"MoolBoran";
+	src: url(../css/font/wedding_font_collection/moolbor_0.ttf);
+}
+@font-face 
+{
+    font-family:"Poor Richard";
+	src: url(../css/font/wedding_font_collection/POORICH.TTF);
+}
+@font-face 
+{
+    font-family:"Pristina";
+	src: url(../css/font/wedding_font_collection/PRISTINA.TTF);
+}
+@font-face 
+{
+    font-family:"Redressed";
+	src: url(../css/font/wedding_font_collection/Redressed.ttf);
+}
+@font-face 
+{
+    font-family:"Respective";
+	src: url(../css/font/wedding_font_collection/Respective.ttf);
+}
+@font-face 
+{
+    font-family:"Scriptina";
+	src: url(../css/font/wedding_font_collection/SCRIPTIN.TTF);
+}
+
+@font-face 
+{
+    font-family:"Tw Cen MT";
+	src: url(../css/font/wedding_font_collection/TCM_____.TTF);
+}
+@font-face 
+{
+    font-family:"GIST - TMOTKumudam";
+    src: url(../css/font/wedding_font_collection/TMOTKUN_Ship.TTF);
+}
+
+//New Font
+            
+@font-face 
+{
+    font-family:"Adequate-ExtraLight";
+    src: url(../css/font/wedding_font_collection/Adequate-ExtraLight.ttf);
+}
+@font-face 
+{
+    font-family:"Austie Bost You Wear Flowers Hollow";
+    src: url("../css/font/wedding_font_collection/Austie-Bost-You Wear-Flowers-Hollow.ttf");
+}
+@font-face 
+{
+    font-family:"Austie Bost You Wear Flowers Solid";
+    src: url("../css/font/wedding_font_collection/Austie Bost You Wear Flowers Solid.ttf");
+}
+@font-face 
+{
+    font-family:"CalendaryHands_PERSONAL_USE_ONLY";
+    src: url(../css/font/wedding_font_collection/CalendaryHands_PERSONAL_USE_ONLY.ttf);
+}
+@font-face 
+{
+    font-family:"chemistry";
+    src: url(../css/font/wedding_font_collection/chemistry.ttf);
+}
+@font-face 
+{
+    font-family:"DawningofaNewDay";
+    src: url(../css/font/wedding_font_collection/DawningofaNewDay.ttf);
+}
+@font-face 
+{
+    font-family:"DollieScript_PersonalUse";
+    src: url(../css/font/wedding_font_collection/DollieScript_PersonalUse.ttf);
+}
+@font-face 
+{
+    font-family:"GistLight";
+    src: url(../css/font/wedding_font_collection/GistLight.ttf);
+}
+@font-face 
+{
+    font-family:"GreatVibes-Regular";
+    src: url(../css/font/wedding_font_collection/GreatVibes-Regular.ttf);
+}
+@font-face 
+{
+    font-family:"MutterKrauseHalbfett";
+    src: url(../css/font/wedding_font_collection/MutterKrauseHalbfett.ttf);
+}
+@font-face 
+{
+    font-family:"MutterKrauseBuch";
+    src: url(../css/font/wedding_font_collection/MutterKrauseBuch.ttf);
+}
+@font-face 
+{
+    font-family:"MutterKrauseNormal";
+    src: url(../css/font/wedding_font_collection/MutterKrauseNormal.ttf);
+}
+
+@font-face 
+{
+    font-family:"Savor";
+    src: url(../css/font/wedding_font_collection/Savor.ttf);
+}
+
+
+
+
+
+//error font
+@font-face 
+{
+    font-family:"Uni Ila.Sundaram-01";
+	src: url(../css/font/wedding_font_collection/Uni Ila.Sundaram-01.ttf);
+}
+@font-face 
+{
+    font-family:"Segoe Print";
+	src: url(../css/font/wedding_font_collection/Segoe Print.ttf);
+}
+@font-face 
+{
+    font-family:"Just Gotta Smile";
+    src:url(../css/font/wedding_font_collection/Just Gotta Smile.ttf);
+}
+@font-face 
+{
+    font-family:"Sweetly Broken";
+    src: url(../css/font/wedding_font_collection/Sweetly Broken.ttf);
+}
+@font-face 
+{
+    font-family:"The Blue Oasis";
+    src: url(../css/font/wedding_font_collection/The Blue Oasis.ttf);
+}
+@font-face 
+{
+    font-family:"Ventilla Stone";
+    src: url(../css/font/wedding_font_collection/Ventilla Stone.ttf);
+}
+@font-face 
+{
+    font-family:"You Make Me Smile";
+    src: url(../css/font/wedding_font_collection/You Make Me Smile.ttf);
+}
+@font-face 
+{
+    font-family:"Oliver tue les fourmis";
+    src: url(../css/font/wedding_font_collection/Oliver tue les fourmis.ttf);
+}
+@font-face 
+{
+    font-family:"Jellyka Bees Antique Handwriting";
+    src: url(../css/font/wedding_font_collection/Jellyka Bees Antique Handwriting.ttf);
+}
+@font-face 
+{
+    font-family:"Jellyka CuttyCupcakes";
+    src: url(../css/font/wedding_font_collection/Jellyka CuttyCupcakes.ttf);
+}
+@font-face 
+{
+    font-family:"Easy Rider";
+    src: url(../css/font/wedding_font_collection/Easy Rider.ttf);
+}
+@font-face 
+{
+    font-family:"Girls Have Many Secrets";
+    src: url(../css/font/wedding_font_collection/Girls Have Many Secrets.ttf);
+}
+@font-face 
+{
+    font-family:"Beyond Wonderland";
+    src: url(../css/font/wedding_font_collection/Beyond Wonderland.ttf);
+}
+/*p {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    line-height:30px;
+}
+span
+{
+    line-height:30px;
+}*/
