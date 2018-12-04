@@ -57,22 +57,58 @@
         }
 
         function calcshowcountdown() {
-            var today = new Date();
-            var Christmas = new Date("12-09-2018");
-            var diffMs = (Christmas - today); // milliseconds between now & Christmas
-            var diffDays = Math.floor(diffMs / 86400000); // days
-            var diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
-            var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
-            var message = diffDays + " days, " + diffHrs + " hours, " + diffMins + " minutes";
+//             var today = new Date();
+//             var Christmas = new Date("12-09-2018");
+//             var diffMs = (Christmas - today); // milliseconds between now & Christmas
+//             var diffDays = Math.floor(diffMs / 86400000); // days
+//             var diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
+//             var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
+//             var message = diffDays + " days, " + diffHrs + " hours, " + diffMins + " minutes";
 
-            var daymessage = diffDays + " days, " + diffHrs + " hours to go";
-            $('#count').empty();
-            $('#count').html(daymessage);
-
-            $('#count_down_div').empty();
-            $('<p>'+message+'</p>').appendTo('#count_down_div');
+//             var daymessage = diffDays + " days, " + diffHrs + " hours to go";
+//             $('#count').empty();
+//             $('#count').html(daymessage);
+            
+            //$('#count_down_div').empty();
+            //$('<p>'+message+'</p>').appendTo('#count_down_div');
+            
+            
         }
+        
+        
+        function GetDateDiff(a, b) {
+    var msInDay = 1000 * 60 * 60 * 24;
+    var d1 = a.getTime();
+    var d2 = b.getTime();
+    
+   var mlseconds = d2 - d1;
+  //take out milliseconds
+  mlseconds = mlseconds/1000;
+  var seconds = Math.floor(mlseconds % 60);
+  mlseconds = mlseconds/60; 
+  var minutes = Math.floor(mlseconds % 60);
+  mlseconds = mlseconds/60; 
+  var hours = Math.floor(mlseconds % 24);  
+  var days = Math.floor(mlseconds/24);
+  
+  return days + ' days, ' + hours + ' hours, ' + minutes + ' minutes, and ' + seconds + ' seconds';
+}
+
+        
         $(document).ready(function () {
+            
+            dt1 = new Date();
+ dt2 = new Date('12-09-2018');
+ setInterval(function() {
+     dt2.setSeconds(dt2.getSeconds()-1);
+
+    var diff = GetDateDiff(dt1, dt2);
+      $('#count_down_div').empty();
+            $('<p>'+diff+'</p>').appendTo('#count_down_div');
+    //$("#dtDIV").html(diff);
+
+}, 1000); 
+            
             $('#coin-slider').coinslider({
                 width: 594,
                 height: 314,
